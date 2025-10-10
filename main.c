@@ -134,6 +134,8 @@ void test_nn() {
 
 //-----------MAIN-----------//
 int main(int argc, char** argv) {
+    
+    printf("hola\n");
     if (debug == 1)
         printf("argc = %d \n", argc);
     if (argc <= 1)
