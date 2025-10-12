@@ -1,0 +1,25 @@
+corrupted size vs. prev_size
+/var/spool/slurmd/job61097/slurm_script: línea 10: 464495 Abortado                (`core' generado) ./exec
+corrupted size vs. prev_size
+./exec: Abortado
+
+ Performance counter stats for './exec':
+
+      1.768.174,76 msec task-clock:u                     #    7,262 CPUs utilized             
+                 0      context-switches:u               #    0,000 /sec                      
+                 0      cpu-migrations:u                 #    0,000 /sec                      
+            15.571      page-faults:u                    #    8,806 /sec                      
+ 3.981.396.233.252      cycles:u                         #    2,252 GHz                         (66,66%)
+    35.496.694.765      stalled-cycles-frontend:u        #    0,89% frontend cycles idle        (66,69%)
+ 3.261.055.679.695      stalled-cycles-backend:u         #   81,91% backend cycles idle         (66,67%)
+ 1.249.644.917.448      instructions:u                   #    0,31  insn per cycle            
+                                                  #    2,61  stalled cycles per insn     (66,65%)
+   149.669.723.909      branches:u                       #   84,646 M/sec                       (66,67%)
+       675.586.688      branch-misses:u                  #    0,45% of all branches             (66,67%)
+
+     243,492734787 seconds time elapsed
+
+    1548,397437000 seconds user
+     193,319603000 seconds sys
+
+

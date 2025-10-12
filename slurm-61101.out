@@ -1,0 +1,2 @@
+corrupted size vs. prev_size
+/var/spool/slurmd/job61101/slurm_script: línea 10: 441417 Abortado                (`core' generado) ./exec

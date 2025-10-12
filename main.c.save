@@ -76,26 +76,22 @@ void train_neural_net() {
         exit(-1);
     }
 
-    int ranpat[num_training_patterns]; // Vector on s'emmagatzema els índexs dels patrons d'entrenament, es barrejaran aleatòriament a cada epoch. 
+    int ranpat[num_training_patterns];
 
     // Gradient Descent
-
-
-    // num_epochs --> 10: Per cada epoch veu totes les mostres N del set d'entrenament i actualitza els pesos
-
-    // Aquest bucle gran no es pot paralelitzar directament perque per cada epoch, hi ha una dependència en els pesos del epoch anterior (update_weights)
     for (int it = 0; it < num_epochs; it++) {
         // Train patterns randomly
-        for (int p = 0; p < num_training_patterns; p++) // Inicialització vector índexs
+        for (int p = 0; p < num_training_patterns; p++)
             ranpat[p] = p;
 
-        for (int p = 0; p < num_training_patterns; p++) { // Barreja aleatòriament l'ordre dels patrons per aquest porch en concret.
+        for (int p = 0; p < num_training_patterns; p++) {
             int x = rando();
             int np = (x * x) % num_training_patterns;
             int op = ranpat[p];
             ranpat[p] = ranpat[np];
             ranpat[np] = op;
         }
+
         for (int i = 0; i < num_training_patterns; i++) {
             int p = ranpat[i];
 	// Cuidado al paralelitzar aquest bucle, pq en el forward_prop tenim 
@@ -104,13 +100,11 @@ void train_neural_net() {
 
             feed_input(p); // Posa el patró p a la capa d'entrada
             forward_prop(); // Propaga l'activació cap endavant
-	    
             back_prop(p); // Calcula l'error i el gradient
             update_weights(); // Actualitza pesos i biaixos amb descens del
 			      // gradient
         }
     }
-
     freeInput(num_training_patterns, input);
 }
 
@@ -140,6 +134,8 @@ void test_nn() {
 
 //-----------MAIN-----------//
 int main(int argc, char** argv) {
+
+    printf("hola\n");
     if (debug == 1)
         printf("argc = %d \n", argc);
     if (argc <= 1)

@@ -13,8 +13,9 @@
  */
 
 #include "training.h"
-
+#include <stdio.h>
 #include <math.h>
+#include <omp.h>
 
 /**
  * @brief Iniciatlitza la capa incial de la xarxa (input layer) amb l'entrada
@@ -47,22 +48,31 @@ void feed_input(int i) {
  *
  */
 void forward_prop() {
-    for (int i = 1; i < num_layers; i++) { // Per cada capa (menys la d'entrada)
-        for (int j = 0; j < num_neurons[i]; j++) { // Cada neurona de la capa
-            lay[i].z[j] = lay[i].bias[j];	   // comença amb el biaix
-						   // el valor d'exitació
-					           // inicial, serà el biaix
+    
+    int i, j;
+    int aux_omp;
+
+    for (i = 1; i < num_layers; i++) { // Per cada capa (menys la d'entrada)
+    #pragma omp parallel num_threads(8)
+{
+        #pragma omp for lastprivate(j)
+        for (j = 0; j < num_neurons[i]; j++) { // Cada neurona de la capa
+//	   printf("thread: %d, capa i=%d, neurona j=%d \n",omp_get_thread_num(), i, j);
+	    lay[i].z[j] = lay[i].bias[j];	   // el valor d'exitació
+	    				           // inicial, serà el biaix
+
             for (int k = 0; k < num_neurons[i - 1]; k++) // Neurones de la capa anterior
-              lay[i].z[j] += 				 // neurona
+                    lay[i].z[j] += 				 // neurona
                     ((lay[i - 1].out_weights[j * num_neurons[i - 1] + k]) *
                      (lay[i - 1].actv[k]));
+	    
 
-            if (i <
-                num_layers - 1)  // Relu Activation Function for Hidden Layers (condició True si la capa és oculta)
+            if (i < num_layers - 1)  // Relu Activation Function for Hidden Layers (condició True si la capa és oculta)
                 lay[i].actv[j] = ((lay[i].z[j]) < 0) ? 0 : lay[i].z[j];
             else  // Sigmoid Activation Function for Output Layer
                 lay[i].actv[j] = 1 / (1 + exp(-lay[i].z[j]));
         }
+    }
     }
 }
 

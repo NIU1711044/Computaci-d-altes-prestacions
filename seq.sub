@@ -3,9 +3,9 @@
 #SBATCH --exclusive
 #SBATCH --partition=nodo.q
 
-module add gcc/13.2.1
-
-gcc -Ofast main.c common/common.c configuration/config.c layer/layer.c randomizer/randomizer.c initialize/initialize.c training/training.c -o exec -lm 
-
-perf stat ./exec
+gcc -Ofast -fopenmp main.c common/common.c configuration/config.c layer/layer.c randomizer/randomizer.c initialize/initialize.c training/training.c -o exec -lm 
+echo "executant"
+./exec
+echo "fi"
+#perf stat ./exec
 ##./exec configuration/configfile.txt
