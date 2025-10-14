@@ -1,0 +1,57 @@
+training/training.c:78:21: error: ‘i’ undeclared here (not in a function)
+   78 |                 lay[i].actv[j] = ((lay[i].z[j]) < 0) ? 0 : lay[i].z[j];
+      |                     ^
+training/training.c:78:23: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘.’ token
+   78 |                 lay[i].actv[j] = ((lay[i].z[j]) < 0) ? 0 : lay[i].z[j];
+      |                       ^
+training/training.c:79:13: error: expected identifier or ‘(’ before ‘else’
+   79 |             else  // Sigmoid Activation Function for Output Layer
+      |             ^~~~
+training/training.c:81:9: error: expected identifier or ‘(’ before ‘}’ token
+   81 |         }
+      |         ^
+training/training.c:82:5: error: expected identifier or ‘(’ before ‘}’ token
+   82 |     }
+      |     ^
+training/training.c:84:1: error: expected identifier or ‘(’ before ‘}’ token
+   84 | }
+      | ^
+training/training.c: In function ‘back_prop’:
+training/training.c:108:38: error: ‘j’ undeclared (first use in this function)
+  108 |     #pragma omp parallel for private(j) schedule(static)
+      |                                      ^
+training/training.c:108:38: note: each undeclared identifier is reported only once for each function it appears in
+training/training.c:124:42: error: invalid form of ‘#pragma omp atomic’ before ‘;’ token
+  124 |                 lay[num_layers - 1].dz[j];
+      |                                          ^
+
+Training...
+
+Testing...
+
+Total encerts = 96
+
+
+Goodbye! (50.745168 sec)
+
+
+ Performance counter stats for './exec':
+
+         578323.19 msec task-clock:u                     #   11.391 CPUs utilized             
+                 0      context-switches:u               #    0.000 /sec                      
+                 0      cpu-migrations:u                 #    0.000 /sec                      
+              7088      page-faults:u                    #   12.256 /sec                      
+     1486318856706      cycles:u                         #    2.570 GHz                         (66.67%)
+       19596511351      stalled-cycles-frontend:u        #    1.32% frontend cycles idle        (66.67%)
+     1279473961874      stalled-cycles-backend:u         #   86.08% backend cycles idle         (66.67%)
+      492611288600      instructions:u                   #    0.33  insn per cycle            
+                                                  #    2.60  stalled cycles per insn     (66.67%)
+       74161543245      branches:u                       #  128.235 M/sec                       (66.67%)
+         114452073      branch-misses:u                  #    0.15% of all branches             (66.67%)
+
+      50.771666199 seconds time elapsed
+
+     571.905391000 seconds user
+       0.305180000 seconds sys
+
+
