@@ -1,0 +1,38 @@
+main.c: In function ‘train_neural_net’:
+main.c:95:17: error: ‘master’ region may not be closely nested inside of work-sharing, ‘loop’, explicit ‘task’ or ‘taskloop’ region
+   95 |         #pragma omp master
+      |                 ^~~
+main.c:105:17: error: barrier region may not be closely nested inside of work-sharing, ‘loop’, ‘critical’, ‘ordered’, ‘master’, ‘masked’, explicit ‘task’ or ‘taskloop’ region
+  105 |         #pragma omp barrier
+      |                 ^~~
+
+Training...
+
+Testing...
+
+Total encerts = 108
+
+
+Goodbye! (54.001486 sec)
+
+
+ Performance counter stats for './exec':
+
+        640.262,46 msec task-clock:u              #   11,849 CPUs utilized          
+                 0      context-switches:u        #    0,000 /sec                   
+                 0      cpu-migrations:u          #    0,000 /sec                   
+             9.166      page-faults:u             #   14,316 /sec                   
+ 1.647.631.724.143      cycles:u                  #    2,573 GHz                      (66,67%)
+    19.659.412.608      stalled-cycles-frontend:u #    1,19% frontend cycles idle     (66,67%)
+ 1.439.439.080.657      stalled-cycles-backend:u  #   87,36% backend cycles idle      (66,67%)
+   382.574.575.479      instructions:u            #    0,23  insn per cycle         
+                                                  #    3,76  stalled cycles per insn  (66,67%)
+    62.531.862.084      branches:u                #   97,666 M/sec                    (66,66%)
+        92.762.298      branch-misses:u           #    0,15% of all branches          (66,67%)
+
+      54,033174225 seconds time elapsed
+
+     633,958226000 seconds user
+       0,232849000 seconds sys
+
+

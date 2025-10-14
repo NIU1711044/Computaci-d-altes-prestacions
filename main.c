@@ -84,10 +84,16 @@ void train_neural_net() {
     // num_epochs --> 10: Per cada epoch veu totes les mostres N del set d'entrenament i actualitza els pesos
 
     // Aquest bucle gran no es pot paralelitzar directament perque per cada epoch, hi ha una dependència en els pesos del epoch anterior (update_weights)
+    #pragma omp parallel
+    {
+
     for (int it = 0; it < num_epochs; it++) {
         // Train patterns randomly
+	#pragma omp for
         for (int p = 0; p < num_training_patterns; p++) // Inicialització vector índexs
             ranpat[p] = p;
+
+	#pragma omp master
 
         for (int p = 0; p < num_training_patterns; p++) { // Barreja aleatòriament l'ordre dels patrons per aquest porch en concret.
             int x = rando();
@@ -96,6 +102,7 @@ void train_neural_net() {
             ranpat[p] = ranpat[np];
             ranpat[np] = op;
         }
+	#pragma omp barrier
         for (int i = 0; i < num_training_patterns; i++) {
             int p = ranpat[i];
 	// Cuidado al paralelitzar aquest bucle, pq en el forward_prop tenim 
@@ -109,6 +116,7 @@ void train_neural_net() {
             update_weights(); // Actualitza pesos i biaixos amb descens del
 			      // gradient
         }
+    	}
     }
 
     freeInput(num_training_patterns, input);

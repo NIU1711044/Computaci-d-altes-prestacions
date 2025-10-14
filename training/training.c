@@ -53,9 +53,10 @@ void forward_prop() {
     int aux_omp;
 
     for (i = 1; i < num_layers; i++) { // Per cada capa (menys la d'entrada)
-    #pragma omp parallel num_threads(8)
-{
-        #pragma omp for lastprivate(j)
+//    #pragma omp parallel num_threads(8)
+//{
+	#pragma omp barrier
+        #pragma omp for
         for (j = 0; j < num_neurons[i]; j++) { // Cada neurona de la capa
 //	   printf("thread: %d, capa i=%d, neurona j=%d \n",omp_get_thread_num(), i, j);
 	    lay[i].z[j] = lay[i].bias[j];	   // el valor d'exitació
@@ -73,7 +74,7 @@ void forward_prop() {
                 lay[i].actv[j] = 1 / (1 + exp(-lay[i].z[j]));
         }
     }
-    }
+  //  }
 }
 
 /**

@@ -1,0 +1,19 @@
+main.c: En la función ‘train_neural_net’:
+main.c:95:10: error: la región ‘master’ puede no estar bien anidada dentro de la región de trabajo compartido, de ‘task’ explícita o de región ‘taskloop’
+  #pragma omp master
+          ^~~
+main.c:103:10: error: la región de barrera puede no estar bien anidada dentro de la región de trabajo compartido, ‘critical’, ‘ordered’, ‘master’, ‘task’ explícita o región ‘taskloop’
+  #pragma omp barrier
+          ^~~
+executant
+
+Training...
+
+Testing...
+
+Total encerts = 108
+
+
+Goodbye! (50.541717 sec)
+
+fi
