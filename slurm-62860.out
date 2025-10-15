@@ -1,0 +1,35 @@
+training/training.c: In function ‘update_weights’:
+training/training.c:164:17: error: collapsed loops not perfectly nested before ‘#pragma’
+  164 |         #pragma omp for schedule(static)
+      |                 ^~~
+
+Training...
+
+Testing...
+
+Total encerts = 87
+
+
+Goodbye! (51.748429 sec)
+
+
+ Performance counter stats for './exec':
+
+        594.602,32 msec task-clock:u                     #   11,484 CPUs utilized             
+                 0      context-switches:u               #    0,000 /sec                      
+                 0      cpu-migrations:u                 #    0,000 /sec                      
+             7.216      page-faults:u                    #   12,136 /sec                      
+ 1.527.251.558.797      cycles:u                         #    2,569 GHz                         (66,67%)
+    19.732.501.108      stalled-cycles-frontend:u        #    1,29% frontend cycles idle        (66,67%)
+ 1.321.849.067.899      stalled-cycles-backend:u         #   86,55% backend cycles idle         (66,67%)
+   491.844.169.157      instructions:u                   #    0,32  insn per cycle            
+                                                  #    2,69  stalled cycles per insn     (66,67%)
+    73.814.924.711      branches:u                       #  124,142 M/sec                       (66,67%)
+       122.204.694      branch-misses:u                  #    0,17% of all branches             (66,67%)
+
+      51,776931664 seconds time elapsed
+
+     587,763492000 seconds user
+       0,587124000 seconds sys
+
+

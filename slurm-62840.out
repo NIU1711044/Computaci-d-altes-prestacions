@@ -1,0 +1,35 @@
+training/training.c: In function ‘forward_prop’:
+training/training.c:164:1: error: expected declaration or statement at end of input
+  164 | }
+      | ^
+
+Training...
+
+Testing...
+
+Total encerts = 92
+
+
+Goodbye! (49.257663 sec)
+
+
+ Performance counter stats for './exec':
+
+        579.513,23 msec task-clock:u              #   11,759 CPUs utilized          
+                 0      context-switches:u        #    0,000 /sec                   
+                 0      cpu-migrations:u          #    0,000 /sec                   
+             6.934      page-faults:u             #   11,965 /sec                   
+ 1.489.172.071.530      cycles:u                  #    2,570 GHz                      (66,67%)
+    21.866.776.553      stalled-cycles-frontend:u #    1,47% frontend cycles idle     (66,67%)
+ 1.277.593.820.285      stalled-cycles-backend:u  #   85,79% backend cycles idle      (66,67%)
+   491.304.621.905      instructions:u            #    0,33  insn per cycle         
+                                                  #    2,60  stalled cycles per insn  (66,67%)
+    73.633.832.999      branches:u                #  127,062 M/sec                    (66,67%)
+       116.068.825      branch-misses:u           #    0,16% of all branches          (66,67%)
+
+      49,281864062 seconds time elapsed
+
+     573,049474000 seconds user
+       0,420691000 seconds sys
+
+

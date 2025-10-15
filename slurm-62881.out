@@ -1,0 +1,42 @@
+training/training.c: In function ‘update_weights’:
+training/training.c:158:25: error: condition expression refers to iteration variable ‘i’
+  158 |         for (int j = 0; j < num_neurons[i + 1]; j++)
+      |                         ^
+training/training.c:168:25: error: condition expression refers to iteration variable ‘i’
+  168 |         for (int j = 0; j < num_neurons[i]; j++)  // Update Bias
+      |                         ^
+training/training.c: At top level:
+training/training.c:172:1: error: expected identifier or ‘(’ before ‘}’ token
+  172 | }
+      | ^
+
+Training...
+
+Testing...
+
+Total encerts = 87
+
+
+Goodbye! (50.157892 sec)
+
+
+ Performance counter stats for './exec':
+
+        576.677,80 msec task-clock:u              #   11,490 CPUs utilized          
+                 0      context-switches:u        #    0,000 /sec                   
+                 0      cpu-migrations:u          #    0,000 /sec                   
+             7.483      page-faults:u             #   12,976 /sec                   
+ 1.480.319.609.543      cycles:u                  #    2,567 GHz                      (66,67%)
+    21.443.739.673      stalled-cycles-frontend:u #    1,45% frontend cycles idle     (66,67%)
+ 1.269.868.052.393      stalled-cycles-backend:u  #   85,78% backend cycles idle      (66,67%)
+   491.985.355.270      instructions:u            #    0,33  insn per cycle         
+                                                  #    2,58  stalled cycles per insn  (66,67%)
+    73.766.527.855      branches:u                #  127,916 M/sec                    (66,67%)
+       119.922.468      branch-misses:u           #    0,16% of all branches          (66,67%)
+
+      50,187873047 seconds time elapsed
+
+     569,787015000 seconds user
+       0,584085000 seconds sys
+
+

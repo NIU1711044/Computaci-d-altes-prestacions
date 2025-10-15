@@ -1,0 +1,35 @@
+training/training.c: In function ‘update_weights’:
+training/training.c:165:9: error: collapsed loops not perfectly nested before ‘for’
+  165 |         for (int j = 0; j < num_neurons[i]; j++)  // Update Bias
+      |         ^~~
+
+Training...
+
+Testing...
+
+Total encerts = 90
+
+
+Goodbye! (49.820828 sec)
+
+
+ Performance counter stats for './exec':
+
+        579.730,77 msec task-clock:u              #   11,631 CPUs utilized          
+                 0      context-switches:u        #    0,000 /sec                   
+                 0      cpu-migrations:u          #    0,000 /sec                   
+             8.696      page-faults:u             #   15,000 /sec                   
+ 1.489.029.295.289      cycles:u                  #    2,568 GHz                      (66,67%)
+    22.156.610.713      stalled-cycles-frontend:u #    1,49% frontend cycles idle     (66,67%)
+ 1.276.172.575.694      stalled-cycles-backend:u  #   85,71% backend cycles idle      (66,67%)
+   493.631.645.466      instructions:u            #    0,33  insn per cycle         
+                                                  #    2,59  stalled cycles per insn  (66,67%)
+    74.336.312.282      branches:u                #  128,226 M/sec                    (66,67%)
+       118.788.651      branch-misses:u           #    0,16% of all branches          (66,67%)
+
+      49,841865414 seconds time elapsed
+
+     573,066954000 seconds user
+       0,577046000 seconds sys
+
+

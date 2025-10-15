@@ -1,0 +1,5 @@
+training/training.c: In function ‘forward_prop’:
+training/training.c:68:21: error: barrier region may not be closely nested inside of work-sharing, ‘loop’, ‘critical’, ‘ordered’, ‘master’, ‘masked’, explicit ‘task’ or ‘taskloop’ region
+   68 |             #pragma omp barrier
+      |                     ^~~
+slurmstepd: error: *** JOB 62834 ON clus12 CANCELLED AT 2025-10-15T11:30:50 ***

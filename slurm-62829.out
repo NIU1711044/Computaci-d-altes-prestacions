@@ -1,0 +1,39 @@
+training/training.c: In function ‘feed_input’:
+training/training.c:27:25: error: expected ‘#pragma omp’ clause before ‘{’ token
+   27 |     #pragma omp parallel{
+      |                         ^
+training/training.c: At top level:
+training/training.c:32:1: error: expected identifier or ‘(’ before ‘}’ token
+   32 | }
+      | ^
+
+Training...
+
+Testing...
+
+Total encerts = 87
+
+
+Goodbye! (62.658062 sec)
+
+
+ Performance counter stats for './exec':
+
+        693.782,82 msec task-clock:u              #   11,068 CPUs utilized          
+                 0      context-switches:u        #    0,000 /sec                   
+                 0      cpu-migrations:u          #    0,000 /sec                   
+            10.220      page-faults:u             #   14,731 /sec                   
+ 1.780.301.630.467      cycles:u                  #    2,566 GHz                      (66,66%)
+    68.934.671.081      stalled-cycles-frontend:u #    3,87% frontend cycles idle     (66,66%)
+ 1.299.802.765.181      stalled-cycles-backend:u  #   73,01% backend cycles idle      (66,67%)
+   656.437.048.946      instructions:u            #    0,37  insn per cycle         
+                                                  #    1,98  stalled cycles per insn  (66,67%)
+   150.838.306.356      branches:u                #  217,414 M/sec                    (66,66%)
+        95.156.716      branch-misses:u           #    0,06% of all branches          (66,67%)
+
+      62,681889603 seconds time elapsed
+
+     684,567877000 seconds user
+       1,866841000 seconds sys
+
+

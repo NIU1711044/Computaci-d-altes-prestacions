@@ -94,7 +94,6 @@ void train_neural_net() {
             ranpat[p] = p;
 
 	#pragma omp master
-
         for (int p = 0; p < num_training_patterns; p++) { // Barreja aleatòriament l'ordre dels patrons per aquest porch en concret.
             int x = rando();
             int np = (x * x) % num_training_patterns;
@@ -102,21 +101,20 @@ void train_neural_net() {
             ranpat[p] = ranpat[np];
             ranpat[np] = op;
         }
+
 	#pragma omp barrier
         for (int i = 0; i < num_training_patterns; i++) {
-            int p = ranpat[i];
-	// Cuidado al paralelitzar aquest bucle, pq en el forward_prop tenim 
-	// varios fors, hem de pensar que es millor fer la
-	// paralelitzacio aqui o directament a dins la funcio forward_prop?
-
+            int p = ranpat[i];		// Cuidado al paralelitzar aquest bucle, pq en el forward_prop tenim 
+					// varios fors, hem de pensar que es millor fer la
+					// paralelitzacio aqui o directament a dins la funcio forward_prop?
             feed_input(p); // Posa el patró p a la capa d'entrada
             forward_prop(); // Propaga l'activació cap endavant
-	    
-            back_prop(p); // Calcula l'error i el gradient
+	    back_prop(p); // Calcula l'error i el gradient
             update_weights(); // Actualitza pesos i biaixos amb descens del
 			      // gradient
         }
-    	}
+    }
+
     }
 
     freeInput(num_training_patterns, input);
@@ -133,7 +131,7 @@ void test_nn() {
         printf("Error!!\n");
         exit(-1);
     }
-
+    #pragma omp parallel for
     for (int i = 0; i < num_test_patterns; i++) {
         for (int j = 0; j < num_neurons[0]; j++)
             lay[0].actv[j] = rSet[i][j];

@@ -1,0 +1,31 @@
+
+Training...
+
+Testing...
+
+Total encerts = 86
+
+
+Goodbye! (49.072974 sec)
+
+
+ Performance counter stats for './exec':
+
+        578.482,46 msec task-clock:u              #   11,782 CPUs utilized          
+                 0      context-switches:u        #    0,000 /sec                   
+                 0      cpu-migrations:u          #    0,000 /sec                   
+             6.331      page-faults:u             #   10,944 /sec                   
+ 1.485.814.174.613      cycles:u                  #    2,568 GHz                      (66,67%)
+    10.980.118.331      stalled-cycles-frontend:u #    0,74% frontend cycles idle     (66,67%)
+ 1.281.583.106.461      stalled-cycles-backend:u  #   86,25% backend cycles idle      (66,67%)
+   491.532.689.823      instructions:u            #    0,33  insn per cycle         
+                                                  #    2,61  stalled cycles per insn  (66,67%)
+    73.670.821.628      branches:u                #  127,352 M/sec                    (66,67%)
+       119.282.340      branch-misses:u           #    0,16% of all branches          (66,67%)
+
+      49,098362751 seconds time elapsed
+
+     571,822442000 seconds user
+       0,588250000 seconds sys
+
+

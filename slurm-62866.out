@@ -1,0 +1,35 @@
+training/training.c: In function ‘update_weights’:
+training/training.c:164:17: error: ‘master’ region may not be closely nested inside of work-sharing, ‘loop’, explicit ‘task’ or ‘taskloop’ region
+  164 |         #pragma omp master
+      |                 ^~~
+
+Training...
+
+Testing...
+
+Total encerts = 103
+
+
+Goodbye! (50.353192 sec)
+
+
+ Performance counter stats for './exec':
+
+        573.871,90 msec task-clock:u              #   11,392 CPUs utilized          
+                 0      context-switches:u        #    0,000 /sec                   
+                 0      cpu-migrations:u          #    0,000 /sec                   
+             9.302      page-faults:u             #   16,209 /sec                   
+ 1.473.383.129.012      cycles:u                  #    2,567 GHz                      (66,67%)
+    21.869.570.168      stalled-cycles-frontend:u #    1,48% frontend cycles idle     (66,67%)
+ 1.263.003.540.782      stalled-cycles-backend:u  #   85,72% backend cycles idle      (66,67%)
+   491.771.436.632      instructions:u            #    0,33  insn per cycle         
+                                                  #    2,57  stalled cycles per insn  (66,67%)
+    73.789.618.075      branches:u                #  128,582 M/sec                    (66,67%)
+       118.564.056      branch-misses:u           #    0,16% of all branches          (66,67%)
+
+      50,373842779 seconds time elapsed
+
+     567,009774000 seconds user
+       0,600142000 seconds sys
+
+

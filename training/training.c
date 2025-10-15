@@ -24,8 +24,13 @@
  * @param i Índex de l'element del conjunt d'entrenament que farem servir.
  **/
 void feed_input(int i) {
+#pragma omp parallel
+{
+    #pragma omp for
     for (int j = 0; j < num_neurons[0]; j++)
         lay[0].actv[j] = input[i][j];
+}
+
 }
 
 /**
@@ -48,25 +53,22 @@ void feed_input(int i) {
  *
  */
 void forward_prop() {
-    
+
     int i, j;
     int aux_omp;
 
     for (i = 1; i < num_layers; i++) { // Per cada capa (menys la d'entrada)
-//    #pragma omp parallel num_threads(8)
-//{
-	#pragma omp barrier
-        #pragma omp for
+	#pragma omp parallel for
         for (j = 0; j < num_neurons[i]; j++) { // Cada neurona de la capa
 //	   printf("thread: %d, capa i=%d, neurona j=%d \n",omp_get_thread_num(), i, j);
 	    lay[i].z[j] = lay[i].bias[j];	   // el valor d'exitació
 	    				           // inicial, serà el biaix
-
+	    
             for (int k = 0; k < num_neurons[i - 1]; k++) // Neurones de la capa anterior
                     lay[i].z[j] += 				 // neurona
                     ((lay[i - 1].out_weights[j * num_neurons[i - 1] + k]) *
                      (lay[i - 1].actv[k]));
-	    
+
 
             if (i < num_layers - 1)  // Relu Activation Function for Hidden Layers (condició True si la capa és oculta)
                 lay[i].actv[j] = ((lay[i].z[j]) < 0) ? 0 : lay[i].z[j];
@@ -74,7 +76,7 @@ void forward_prop() {
                 lay[i].actv[j] = 1 / (1 + exp(-lay[i].z[j]));
         }
     }
-  //  }
+
 }
 
 /**
@@ -99,14 +101,18 @@ void forward_prop() {
  */
 void back_prop(int p) {
     // Output Layer
-    for (int j = 0; j < num_neurons[num_layers - 1]; j++) {
+#pragma omp parallel
+{
+    #pragma omp for nowait
+    for (int j = 0; j < num_neurons[num_layers - 1]; j++) { // Calcula l'error de cada neurona de sortida
         lay[num_layers - 1].dz[j] =
             (lay[num_layers - 1].actv[j] - desired_outputs[p][j]) *
             (lay[num_layers - 1].actv[j]) * (1 - lay[num_layers - 1].actv[j]);
         lay[num_layers - 1].dbias[j] = lay[num_layers - 1].dz[j];
     }
 
-    for (int j = 0; j < num_neurons[num_layers - 1]; j++) {
+    #pragma omp master
+    for (int j = 0; j < num_neurons[num_layers - 1]; j++) { // Propagació de l'error cap enrrere
         for (int k = 0; k < num_neurons[num_layers - 2]; k++) {
             lay[num_layers - 2].dw[j * num_neurons[num_layers - 2] + k] =
                 (lay[num_layers - 1].dz[j] * lay[num_layers - 2].actv[k]);
@@ -118,11 +124,12 @@ void back_prop(int p) {
     }
 
     // Hidden Layers
-    for (int i = num_layers - 2; i > 0; i--) {
+    for (int i = num_layers - 2; i > 0; i--) { // Va capa per capa enrere, saltant la d'entrada
+	#pragma omp for
         for (int j = 0; j < num_neurons[i]; j++) {
             lay[i].dz[j] = (lay[i].z[j] >= 0) ? lay[i].dactv[j] : 0;
 
-            for (int k = 0; k < num_neurons[i - 1]; k++) {
+            for (int k = 0; k < num_neurons[i - 1]; k++) { // Aquí hi ha una dependència
                 lay[i - 1].dw[j * num_neurons[i - 1] + k] =
                     lay[i].dz[j] * lay[i - 1].actv[k];
 
@@ -135,6 +142,7 @@ void back_prop(int p) {
         }
     }
 }
+}
 
 /**
  * @brief Actualitza els vectors de pesos (out_weights) i de biax (bias) de cada
@@ -144,6 +152,7 @@ void back_prop(int p) {
  * @see back_prop
  */
 void update_weights(void) {
+    #pragma omp parallel for
     for (int i = 0; i < num_layers - 1; i++) {
         for (int j = 0; j < num_neurons[i + 1]; j++)
             for (int k = 0; k < num_neurons[i]; k++)  // Update Weights

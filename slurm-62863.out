@@ -1,0 +1,35 @@
+training/training.c: In function ‘update_weights’:
+training/training.c:160:29: error: condition expression refers to iteration variable ‘i’
+  160 |             for (int j = 0; j < num_neurons[i + 1]; j++) {
+      |                             ^
+
+Training...
+
+Testing...
+
+Total encerts = 114
+
+
+Goodbye! (49.474714 sec)
+
+
+ Performance counter stats for './exec':
+
+        571.938,64 msec task-clock:u              #   11,555 CPUs utilized          
+                 0      context-switches:u        #    0,000 /sec                   
+                 0      cpu-migrations:u          #    0,000 /sec                   
+             7.644      page-faults:u             #   13,365 /sec                   
+ 1.468.634.695.345      cycles:u                  #    2,568 GHz                      (66,67%)
+    22.497.350.032      stalled-cycles-frontend:u #    1,53% frontend cycles idle     (66,67%)
+ 1.257.024.935.903      stalled-cycles-backend:u  #   85,59% backend cycles idle      (66,67%)
+   491.596.884.920      instructions:u            #    0,33  insn per cycle         
+                                                  #    2,56  stalled cycles per insn  (66,67%)
+    73.850.893.710      branches:u                #  129,124 M/sec                    (66,67%)
+       117.217.651      branch-misses:u           #    0,16% of all branches          (66,67%)
+
+      49,495407633 seconds time elapsed
+
+     565,251949000 seconds user
+       0,536417000 seconds sys
+
+
