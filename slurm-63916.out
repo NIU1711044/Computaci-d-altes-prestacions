@@ -1,0 +1,43 @@
+main.c:120:5: warning: data definition has no type or storage class
+  120 |     freeInput(num_training_patterns, input);
+      |     ^~~~~~~~~
+main.c:120:5: warning: type defaults to ‘int’ in declaration of ‘freeInput’ [-Wimplicit-int]
+main.c:120:5: warning: parameter names (without types) in function declaration
+main.c:120:5: error: conflicting types for ‘freeInput’; have ‘int()’
+main.c:26:6: note: previous definition of ‘freeInput’ with type ‘void(int,  char **)’
+   26 | void freeInput(int np, char** input) {
+      |      ^~~~~~~~~
+main.c:121:1: error: expected identifier or ‘(’ before ‘}’ token
+  121 | }
+      | ^
+
+Training...
+
+Testing...
+
+Total encerts = 95
+
+
+Goodbye! (51.970504 sec)
+
+
+ Performance counter stats for './exec':
+
+        608.095,49 msec task-clock:u                     #   11,695 CPUs utilized             
+                 0      context-switches:u               #    0,000 /sec                      
+                 0      cpu-migrations:u                 #    0,000 /sec                      
+             7.341      page-faults:u                    #   12,072 /sec                      
+ 1.562.036.192.563      cycles:u                         #    2,569 GHz                         (66,67%)
+     6.945.488.560      stalled-cycles-frontend:u        #    0,44% frontend cycles idle        (66,67%)
+ 1.407.818.724.169      stalled-cycles-backend:u         #   90,13% backend cycles idle         (66,66%)
+   348.257.456.415      instructions:u                   #    0,22  insn per cycle            
+                                                  #    4,04  stalled cycles per insn     (66,67%)
+    49.887.605.105      branches:u                       #   82,039 M/sec                       (66,67%)
+       119.332.885      branch-misses:u                  #    0,24% of all branches             (66,67%)
+
+      51,998236583 seconds time elapsed
+
+     601,133560000 seconds user
+       0,662744000 seconds sys
+
+

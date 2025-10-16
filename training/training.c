@@ -24,12 +24,9 @@
  * @param i Índex de l'element del conjunt d'entrenament que farem servir.
  **/
 void feed_input(int i) {
-#pragma omp parallel
-{
-    #pragma omp for
+//    #pragma omp parallel for - lay[0] modifica capa d'entrada (compartida per tots els patrons)
     for (int j = 0; j < num_neurons[0]; j++)
         lay[0].actv[j] = input[i][j];
-}
 
 }
 
@@ -63,7 +60,7 @@ void forward_prop() {
 //	   printf("thread: %d, capa i=%d, neurona j=%d \n",omp_get_thread_num(), i, j);
 	    lay[i].z[j] = lay[i].bias[j];	   // el valor d'exitació
 	    				           // inicial, serà el biaix
-	    
+
             for (int k = 0; k < num_neurons[i - 1]; k++) // Neurones de la capa anterior
                     lay[i].z[j] += 				 // neurona
                     ((lay[i - 1].out_weights[j * num_neurons[i - 1] + k]) *
@@ -99,51 +96,41 @@ void forward_prop() {
  * (input layer) que és coneguda (imatge d'entrada).
  *
  */
+
 void back_prop(int p) {
+    int L = num_layers - 1;
+
     // Output Layer
-#pragma omp parallel
-{
-    #pragma omp for nowait
-    for (int j = 0; j < num_neurons[num_layers - 1]; j++) { // Calcula l'error de cada neurona de sortida
-        lay[num_layers - 1].dz[j] =
-            (lay[num_layers - 1].actv[j] - desired_outputs[p][j]) *
-            (lay[num_layers - 1].actv[j]) * (1 - lay[num_layers - 1].actv[j]);
-        lay[num_layers - 1].dbias[j] = lay[num_layers - 1].dz[j];
+    #pragma omp parallel for
+    for (int j = 0; j < num_neurons[L]; j++) {
+        lay[L].dz[j] = (lay[L].actv[j] - desired_outputs[p][j]) *
+                        lay[L].actv[j] * (1 - lay[L].actv[j]);
+        lay[L].dbias[j] = lay[L].dz[j];
     }
 
-    #pragma omp master
-    for (int j = 0; j < num_neurons[num_layers - 1]; j++) { // Propagació de l'error cap enrrere
-        for (int k = 0; k < num_neurons[num_layers - 2]; k++) {
-            lay[num_layers - 2].dw[j * num_neurons[num_layers - 2] + k] =
-                (lay[num_layers - 1].dz[j] * lay[num_layers - 2].actv[k]);
-            lay[num_layers - 2].dactv[k] =
-                lay[num_layers - 2]
-                    .out_weights[j * num_neurons[num_layers - 2] + k] *
-                lay[num_layers - 1].dz[j];
+    // Output -> Hidden Layer weight update accumulation
+    for (int j = 0; j < num_neurons[L]; j++) {
+        for (int k = 0; k < num_neurons[L-1]; k++) {
+            lay[L-1].dw[j * num_neurons[L-1] + k] = lay[L].dz[j] * lay[L-1].actv[k];
+            lay[L-1].dactv[k] = lay[L-1].out_weights[j * num_neurons[L-1] + k] * lay[L].dz[j];
         }
     }
 
     // Hidden Layers
-    for (int i = num_layers - 2; i > 0; i--) { // Va capa per capa enrere, saltant la d'entrada
-	#pragma omp for
+    for (int i = L-1; i > 0; i--) {
+        #pragma omp parallel for
         for (int j = 0; j < num_neurons[i]; j++) {
             lay[i].dz[j] = (lay[i].z[j] >= 0) ? lay[i].dactv[j] : 0;
-
-            for (int k = 0; k < num_neurons[i - 1]; k++) { // Aquí hi ha una dependència
-                lay[i - 1].dw[j * num_neurons[i - 1] + k] =
-                    lay[i].dz[j] * lay[i - 1].actv[k];
-
-                if (i > 1)
-                    lay[i - 1].dactv[k] =
-                        lay[i - 1].out_weights[j * num_neurons[i - 1] + k] *
-                        lay[i].dz[j];
-            }
             lay[i].dbias[j] = lay[i].dz[j];
+
+            for (int k = 0; k < num_neurons[i-1]; k++) {
+                lay[i-1].dw[j * num_neurons[i-1] + k] = lay[i].dz[j] * lay[i-1].actv[k];
+                if (i > 1)
+                    lay[i-1].dactv[k] = lay[i-1].out_weights[j * num_neurons[i-1] + k] * lay[i].dz[j];
+            }
         }
     }
 }
-}
-
 /**
  * @brief Actualitza els vectors de pesos (out_weights) i de biax (bias) de cada
  * etapa d'acord amb els càlculs fet a la funció de back_prop i el factor
@@ -152,15 +139,16 @@ void back_prop(int p) {
  * @see back_prop
  */
 void update_weights(void) {
-    #pragma omp parallel for
-    for (int i = 0; i < num_layers - 1; i++) {
+    for (int i = 0; i < num_layers - 1; i++){
+	#pragma omp parallel for
         for (int j = 0; j < num_neurons[i + 1]; j++)
             for (int k = 0; k < num_neurons[i]; k++)  // Update Weights
                 lay[i].out_weights[j * num_neurons[i] + k] =
                     (lay[i].out_weights[j * num_neurons[i] + k]) -
                     (alpha * lay[i].dw[j * num_neurons[i] + k]);
-
+	}
+    for (int i=0;i< num_layers-1; i++){
         for (int j = 0; j < num_neurons[i]; j++)  // Update Bias
             lay[i].bias[j] = lay[i].bias[j] - (alpha * lay[i].dbias[j]);
-    }
+	}
 }

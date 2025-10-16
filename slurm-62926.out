@@ -1,0 +1,53 @@
+training/training.c: In function ‘update_weights’:
+training/training.c:145:25: error: condition expression refers to iteration variable ‘i’
+  145 |         for (int j = 0; j < num_neurons[i + 1]; j++)
+      |                         ^
+training/training.c:151:38: error: expected ‘)’ before ‘}’ token
+  151 |     for (int i=0;i< num_layers-1; i++}
+      |         ~                            ^
+      |                                      )
+training/training.c:151:38: error: expected expression before ‘}’ token
+training/training.c: At top level:
+training/training.c:152:9: error: expected identifier or ‘(’ before ‘for’
+  152 |         for (int j = 0; j < num_neurons[i]; j++)  // Update Bias
+      |         ^~~
+training/training.c:152:27: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘<’ token
+  152 |         for (int j = 0; j < num_neurons[i]; j++)  // Update Bias
+      |                           ^
+training/training.c:152:46: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘++’ token
+  152 |         for (int j = 0; j < num_neurons[i]; j++)  // Update Bias
+      |                                              ^~
+training/training.c:154:1: error: expected identifier or ‘(’ before ‘}’ token
+  154 | }
+      | ^
+
+Training...
+
+Testing...
+
+Total encerts = 99
+
+
+Goodbye! (52.608841 sec)
+
+
+ Performance counter stats for './exec':
+
+         612332.73 msec task-clock:u                     #   11.630 CPUs utilized             
+                 0      context-switches:u               #    0.000 /sec                      
+                 0      cpu-migrations:u                 #    0.000 /sec                      
+              7065      page-faults:u                    #   11.538 /sec                      
+     1573511245351      cycles:u                         #    2.570 GHz                         (66.67%)
+        8528093571      stalled-cycles-frontend:u        #    0.54% frontend cycles idle        (66.67%)
+     1376603537500      stalled-cycles-backend:u         #   87.49% backend cycles idle         (66.67%)
+      491468457095      instructions:u                   #    0.31  insn per cycle            
+                                                  #    2.80  stalled cycles per insn     (66.67%)
+       73673767066      branches:u                       #  120.317 M/sec                       (66.67%)
+         117131929      branch-misses:u                  #    0.16% of all branches             (66.67%)
+
+      52.650202930 seconds time elapsed
+
+     605.528112000 seconds user
+       0.551171000 seconds sys
+
+
