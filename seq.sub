@@ -4,6 +4,6 @@
 #SBATCH --partition=nodo.q
 
 gcc -Ofast main.c common/common.c configuration/config.c layer/layer.c randomizer/randomizer.c initialize/initialize.c training/training.c -o exec -lm 
-./exec
-#perf stat ./exec
+#./exec
+perf stat ./exec
 ##./exec configuration/configfile.txt

@@ -24,10 +24,8 @@
  * @param i Índex de l'element del conjunt d'entrenament que farem servir.
  **/
 void feed_input(int i) {
-//    #pragma omp parallel for - lay[0] modifica capa d'entrada (compartida per tots els patrons)
     for (int j = 0; j < num_neurons[0]; j++)
         lay[0].actv[j] = input[i][j];
-
 }
 
 /**
@@ -57,7 +55,6 @@ void forward_prop() {
     for (i = 1; i < num_layers; i++) { // Per cada capa (menys la d'entrada)
 	#pragma omp parallel for
         for (j = 0; j < num_neurons[i]; j++) { // Cada neurona de la capa
-//	   printf("thread: %d, capa i=%d, neurona j=%d \n",omp_get_thread_num(), i, j);
 	    lay[i].z[j] = lay[i].bias[j];	   // el valor d'exitació
 	    				           // inicial, serà el biaix
 

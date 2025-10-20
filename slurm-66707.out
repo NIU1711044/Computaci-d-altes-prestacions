@@ -1,0 +1,14 @@
+main.c: En la función ‘train_neural_net’:
+main.c:102:1: error: expected expression before ‘.’ token
+ .
+ ^
+
+Training...
+
+Testing...
+
+Total encerts = 885
+
+
+Goodbye! (1.811087 sec)
+
